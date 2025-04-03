@@ -13,7 +13,7 @@ abstract class Vehicle {
     if (speed >= 0) { // Ensuring speed is not negative
       _speed = speed;
     } else {
-      print("Speed cannot be negative.");
+      print("Speed cannot be negative! Thanks.");
     }
   }
 
