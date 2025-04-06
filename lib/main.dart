@@ -1,37 +1,60 @@
 // ignore_for_file: avoid_print
 
-// a) Create an abstract class Vehicle
-abstract class Vehicle {
-  int _speed = 0; // Encapsulated private variable
+import 'package:flutter/material.dart';
 
-  // Abstract method move()
-  void move();
-
-  // Non-abstract method to set speed
-  // c) Encapsulation to prevent direct access to _speed
-  void setSpeed(int speed) {
-    if (speed >= 0) { // Ensuring speed is not negative
-      _speed = speed;
-    } else {
-      print("Speed cannot be negative.");
-    }
-  }
-
-  int get speed => _speed; // Getter method to access speed safely
-}
-
-// b) Create a subclass Car that extends Vehicle
-class Car extends Vehicle {
-  @override
-  void move() {
-    print("The car is moving at $_speed km/h");
-  }
-}
-
-// d) Main function to test the implementation
 void main() {
-  Car myCar = Car(); // Create an object of Car
-  myCar.setSpeed(120); // Set the speed
-  myCar.move(); // Call the move() method
+  List<Map<String, dynamic>> students = [
+    {"name": "Alice", "scores": [85, 90, 78]},
+    {"name": "Bob", "scores": [88, 76, 95]},
+    {"name": "Charlie", "scores": [90, 92, 85]},
+  ];
+
+  // Step 1: Calculate average scores and store in a map
+  Map<String, double> averageScores = {};
+  for (var student in students) {
+    String name = student['name'];
+    List<int> scores = List<int>.from(student['scores']);
+    double avg = scores.reduce((a, b) => a + b) / scores.length;
+    averageScores[name] = double.parse(avg.toStringAsFixed(2));
+  }
+
+
+  // Step 2: Sort the map by values in descending order
+  var sortedEntries = averageScores.entries.toList()
+    ..sort((a, b) => b.value.compareTo(a.value));
+
+
+  // Step 3: Create a new map from the sorted entries
+  Map<String, double> sortedMap = {
+    for (var entry in sortedEntries) entry.key: entry.value
+  };
+
+  print(sortedMap);
 }
+
+
+// void main() {
+//   List<Map<String, dynamic>> students = [
+//     {"name": "Alice", "scores": [85, 90, 78]},
+//     {"name": "Bob", "scores": [88, 76, 95]},
+//     {"name": "Charlie", "scores": [90, 92, 85]},
+//   ];
+
+//   // Create and sort entries in one go
+//   var sortedMap = Map.fromEntries(
+//     students
+//         .map((student) {
+//           var name = student['name'];
+//           var scores = student['scores'] as List;
+//           var avg = (scores.reduce((a, b) => a + b) / scores.length)
+//               .toStringAsFixed(2);
+//           return MapEntry(name, double.parse(avg));
+//         })
+//         .toList()
+//           ..sort((a, b) => b.value.compareTo(a.value)),
+//   );
+
+//   print(sortedMap);
+// }
+
 
